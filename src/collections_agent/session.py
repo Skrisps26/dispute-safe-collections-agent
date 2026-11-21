@@ -1,4 +1,4 @@
-from livekit.agents import AgentSession, APIConnectOptions
+from livekit.agents import AgentSession, APIConnectOptions, llm
 from livekit.agents.voice import SessionConnectOptions
 from .agent import CollectionsAgent
 from .fixtures import load_fixture
@@ -24,10 +24,12 @@ def create_session(settings: Settings | None = None, state: SessionState | None 
 
     @session.on("conversation_item_added")
     def reply_sources(event):
+        if not isinstance(event.item, llm.ChatMessage):
+            return
         pending = getattr(agent, "_pending_sources", None)
         if event.item.role == "assistant" and pending and event.item.text_content == pending["text"]:
             state.event("reply_sources", {"message_id":event.item.id, **pending})
             agent._pending_sources = None
         if event.item.role == "assistant" and event.item.metrics:
-            state.event("latency", {"message_id":event.item.id,"unit":"seconds", "metrics":event.item.metrics.model_dump(mode="json")})
+            state.event("latency", {"message_id":event.item.id,"unit":"seconds", "metrics":event.item.metrics})
     return session, agent, provider

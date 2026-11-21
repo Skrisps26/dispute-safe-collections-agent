@@ -1,0 +1,204 @@
+{
+  "version": "v2",
+  "status": "not_run",
+  "timestamp": "2026-11-21T18:48:05.480699+00:00",
+  "model": "muse-spark-1.3",
+  "provider": "https://api.meta.ai/v1",
+  "counts": {
+    "executed": 0,
+    "scored": 0,
+    "errors": 0,
+    "unrun": 30,
+    "passed": 0
+  },
+  "hashes": {
+    "prompts/v2.md": "8b8648c3fdd75b6c84ce166c3cc3cfaf03911e4ea6107e38466a61de1dea4343",
+    "evals/scenarios.json": "594670390575cd3eae63a3d9946ebebab90d1902382f0cb10d28fdb0a924641a",
+    "data/demo.json": "e42e2807b0a7c72c0245cda8b085fffbc16b6595e0bf0257ff3539f2fd821155",
+    "evals/judge.md": "cf563453dc459991cfb6356540e0410f309b0f1fbbeb86972df2dcd4180c07c1"
+  },
+  "scores": null,
+  "cases": [
+    {
+      "id": "01",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "02",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "03",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "04",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "05",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "06",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "07",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "08",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "09",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "10",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "11",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "12",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "13",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "14",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "15",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "16",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "17",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "18",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "19",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "20",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "21",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "22",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "23",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "24",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "25",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "26",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "27",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "28",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "29",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    },
+    {
+      "id": "30",
+      "status": "not_run",
+      "scores": null,
+      "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+    }
+  ],
+  "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+}
