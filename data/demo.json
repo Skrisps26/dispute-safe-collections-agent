@@ -1,0 +1,61 @@
+{
+  "as_of": "2026-11-21",
+  "accounts": [
+    {
+      "customer_id": "CUST-1001",
+      "name": "Alex Morgan",
+      "email": "alex.morgan@example.test",
+      "invoice_id": "INV-2026-1042",
+      "currency": "USD",
+      "original_cents": 140000,
+      "payments": [
+        {
+          "date": "2026-10-30",
+          "amount_cents": 20000
+        }
+      ],
+      "balance_cents": 120000,
+      "due": "2026-11-01",
+      "fee_cents": 0,
+      "installments": [
+        {
+          "date": "2026-11-28",
+          "amount_cents": 60000
+        },
+        {
+          "date": "2026-12-12",
+          "amount_cents": 60000
+        }
+      ],
+      "description": "Fictional service invoice"
+    },
+    {
+      "customer_id": "CUST-1002",
+      "name": "Jordan Lee",
+      "email": "jordan.lee@example.test",
+      "invoice_id": "INV-2026-1043",
+      "currency": "USD",
+      "original_cents": 83000,
+      "payments": [],
+      "balance_cents": 83000,
+      "due": "2026-11-05",
+      "fee_cents": 0,
+      "installments": [],
+      "description": "Fictional service invoice"
+    },
+    {
+      "customer_id": "CUST-1003",
+      "name": "Sam Patel",
+      "email": "sam.patel@example.test",
+      "invoice_id": "INV-2026-1044",
+      "currency": "USD",
+      "original_cents": 240000,
+      "payments": [],
+      "balance_cents": 240000,
+      "due": "2026-10-15",
+      "fee_cents": 0,
+      "installments": [],
+      "description": "Fictional service invoice"
+    }
+  ]
+}
