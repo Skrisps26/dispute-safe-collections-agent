@@ -36,9 +36,17 @@ class Publisher:
         # Enqueue an immutable snapshot in sequence, through the same publisher.
         for event in list(self.state.events)[after:]:
             self.enqueue(event)
-        self.state.event("case_state", {"case_id":self.state.case_id,"collection_hold":self.state.collection_hold,
-            "contact_suppressed":self.state.contact_suppressed,"simulated":True})
-        self.state.event("voice_state", {"enabled":bool(self.state.voice_lease),"lease_id":self.state.voice_lease})
+        snapshots = {
+            "case_state": {"case_id":self.state.case_id,"collection_hold":self.state.collection_hold,
+                "contact_suppressed":self.state.contact_suppressed,"simulated":True},
+            "voice_state": {"enabled":bool(self.state.voice_lease),"lease_id":self.state.voice_lease},
+        }
+        for kind, payload in snapshots.items():
+            latest = next((event for event in reversed(self.state.events) if event["type"] == kind), None)
+            if latest is None:
+                self.state.event(kind, payload)
+            elif latest["seq"] <= after:
+                self.enqueue(latest)
         return {"session_id":self.state.session_id,"last_seq":len(self.state.events)}
 
     async def close(self):

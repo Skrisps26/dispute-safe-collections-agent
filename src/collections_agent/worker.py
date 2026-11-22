@@ -5,6 +5,7 @@ import time
 import jwt
 from livekit import api, rtc
 from livekit.agents import AgentServer, JobContext, cli, room_io
+from livekit.plugins import silero  # register packaged VAD assets for download-files; no instance here
 from .limits import redis_client, require_budget
 from .models import SessionState
 from .session import create_session
@@ -100,7 +101,7 @@ async def entrypoint(ctx: JobContext):
         def closed(event):
             finished.set()
 
-        await session.start(agent=agent,room=ctx.room,room_options=room_io.RoomOptions(
+        await session.start(agent=agent,room=ctx.room,record=False,room_options=room_io.RoomOptions(
             participant_identity=participant.identity,video_input=False,
             audio_input=room_io.AudioInputOptions(pre_connect_audio=False),
             text_output=room_io.TextOutputOptions(sync_transcription=False),

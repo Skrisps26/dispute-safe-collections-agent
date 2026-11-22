@@ -8,6 +8,7 @@
     "executed": 0,
     "scored": 0,
     "errors": 0,
+    "skipped": 0,
     "unrun": 30,
     "passed": 0
   },
@@ -200,5 +201,6 @@
       "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
     }
   ],
-  "reason": "Not run \u2014 provider calls disabled / credentials unavailable"
+  "reason": "Not run \u2014 provider calls disabled / credentials unavailable",
+  "infrastructure_errors": []
 }

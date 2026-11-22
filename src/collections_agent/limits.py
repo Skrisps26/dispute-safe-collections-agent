@@ -42,6 +42,8 @@ class Guards:
         require_budget(self.settings, scope)
         if len(state.customer_turns) >= 30:
             raise LimitError("Session turn limit reached. Start an explicitly new demo.")
+        if len(state.events) > 460:
+            raise LimitError("Evidence capacity reached. Start an explicitly new demo.")
         for label, identifier, cap, seconds in [
             ("visitor-minute",state.visitor_id,6,60), ("visitor-day",state.visitor_id,30,86400),
             ("ip-day",state.ip_hash,60,86400), ("global-day","all",200,86400)]:

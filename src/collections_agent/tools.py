@@ -32,9 +32,10 @@ class DomainTools:
                 "simulated": True})
         return result
 
-    def fact(self, call: str, label: str, text: str, pointer: str, collection: bool = False) -> Fact:
+    def fact(self, call: str, label: str, text: str, pointer: str | list[str], collection: bool = False) -> Fact:
+        pointers = [pointer] if isinstance(pointer, str) else pointer
         return Fact(fact_id=f"{call}:{label}", text=text,
-                    sources=[Source(tool_call_id=call, json_pointer=pointer)], collection=collection)
+                    sources=[Source(tool_call_id=call, json_pointer=p) for p in pointers], collection=collection)
 
     def _allowed(self, invoice_id):
         return invoice_id is None or invoice_id == self.state.invoice_id
@@ -45,13 +46,14 @@ class DomainTools:
         a = bound_account(self.state)
         data = a.model_dump(mode="json", exclude={"payments", "email"})
         data["as_of"] = load_fixture().as_of.isoformat()
-        facts = [self.fact(call, "balance", f"The recorded balance is {money(a.balance_cents)} USD.", "/data/balance_cents"),
-                 self.fact(call, "due", f"The recorded due date is {a.due.isoformat()}; this demo is frozen as of {data['as_of']}.", "/data/due"),
-                 self.fact(call, "details", f"{a.invoice_id} is a fictional service invoice for {a.name}; the original amount was {money(a.original_cents)} USD.", "/data/original_cents"),
+        data["simulated"] = True
+        facts = [self.fact(call, "balance", f"The recorded balance is {money(a.balance_cents)} USD.", ["/data/balance_cents", "/data/currency"]),
+                 self.fact(call, "due", f"The recorded due date is {a.due.isoformat()}; this demo is frozen as of {data['as_of']}.", ["/data/due", "/data/as_of"]),
+                 self.fact(call, "details", f"{a.invoice_id} is a fictional service invoice for {a.name}; the original amount was {money(a.original_cents)} USD.", ["/data/invoice_id", "/data/description", "/data/name", "/data/original_cents", "/data/currency"]),
                  self.fact(call, "fee", "There is no late fee.", "/data/fee_cents")]
         if a.installments:
             parts = " and ".join(f"{money(p.amount_cents)} on {p.date.isoformat()}" for p in a.installments)
-            facts.append(self.fact(call, "split", f"The approved demo option is {parts}. This is a simulation, not a real payment agreement.", "/data/installments", True))
+            facts.append(self.fact(call, "split", f"The approved demo option is {parts}. This is a simulation, not a real payment agreement.", ["/data/installments", "/data/simulated"], True))
         return ToolResult(ok=True, data=data, facts=facts)
 
     def _get_payment_history(self, call, invoice_id=None):

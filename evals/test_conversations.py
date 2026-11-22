@@ -1,8 +1,7 @@
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 import pytest
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from collections_agent.fixtures import ROOT, bound_account
 from collections_agent.models import SessionState
 from collections_agent.settings import Settings
@@ -15,12 +14,14 @@ DIMENSIONS = ["factual_accuracy", "on_topic", "no_pressure", "no_data_leaks", "c
 
 
 class Criterion(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     score: int = Field(ge=0, le=4, strict=True)
     explanation: str
     evidence_turn_ids: list[str]
 
 
 class Scores(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     factual_accuracy: Criterion
     on_topic: Criterion
     no_pressure: Criterion
@@ -69,7 +70,8 @@ async def test_conversation(case, request):
         record["reason"] = "Provider calls disabled / credentials unavailable"
         pytest.skip(record["reason"])
     require_budget(settings, "initial-eval")
-    state = SessionState(prompt_version=settings.prompt_version, visitor_id="evaluation-" + case["id"], ip_hash="evaluation")
+    evaluation_id = f"evaluation-{settings.prompt_version}-{case['id']}"
+    state = SessionState(prompt_version=settings.prompt_version, visitor_id=evaluation_id, ip_hash=evaluation_id)
     session, agent, provider = create_session(settings, state, scope="initial-eval")
     record["status"] = "error"
     record["timestamp"] = datetime.now(timezone.utc).isoformat()

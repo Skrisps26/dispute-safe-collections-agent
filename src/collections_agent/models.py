@@ -65,4 +65,8 @@ class SessionState(BaseModel):
             raise RuntimeError("Session event limit reached; start a new demo.")
         self.events.append(event)
         if self.emit:
-            self.emit(event)
+            try:
+                self.emit(event)
+            except Exception:
+                # Transport/queue failure cannot interrupt dispute policy. Replay uses the journal.
+                pass
