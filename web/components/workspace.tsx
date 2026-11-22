@@ -70,6 +70,14 @@ function ActiveWorkspace({session,sessionId,error,setError,textAvailable,voiceAv
  useEffect(()=>{
   if(voiceEvent?.type==='voice_state'&&!voiceEvent.payload.enabled)void session.room.localParticipant.setMicrophoneEnabled(false);
  },[voiceEvent,session.room]);
+ useEffect(()=>{
+  session.room.localParticipant.registerRpcMethod('collections.voice_off',async data=>{
+   if(data.callerIdentity!==agent.identity)throw new Error('Unauthorized sender');
+   await session.room.localParticipant.setMicrophoneEnabled(false);
+   return '{}';
+  });
+  return ()=>{session.room.localParticipant.unregisterRpcMethod('collections.voice_off');};
+ },[session.room,agent.identity]);
  async function voiceOff(){
   await session.room.localParticipant.setMicrophoneEnabled(false);
   if(agent.identity)await session.room.localParticipant.performRpc({destinationIdentity:agent.identity,method:'collections.set_voice',payload:JSON.stringify({enabled:false})});
@@ -101,7 +109,7 @@ function ActiveWorkspace({session,sessionId,error,setError,textAvailable,voiceAv
     {agent.isFinished&&messages.length>0&&<p role="status" className="problem">This demo session ended. Evidence remains visible; New demo starts a fresh conversation without resetting daily quotas.</p>}
     <form className="composer" onSubmit={e=>{e.preventDefault();void submit(input);}}><label htmlFor="chat-input" className="sr-only">Message about this invoice</label><Input id="chat-input" autoComplete="off" placeholder="Ask about this invoice…" value={input} onChange={e=>setInput(e.target.value)} maxLength={2000}/><Button type="submit" size="icon" aria-label="Send message" disabled={!input.trim()||busy}><ArrowUp size={18}/></Button></form>
     <div className="chat-footer"><span className="secondary">Text first. Voice requires explicit microphone consent.</span><Button variant="ghost" size="sm" disabled={!available||!voiceAvailable||voiceBusy} onClick={()=>void toggleVoice()}><Mic size={14}/>{voiceEnabled?'Turn voice off':voiceAvailable?'Enable voice':'Voice unavailable'}</Button><Sheet><SheetTrigger asChild><Button className="mobile-evidence-button" variant="outline" size="sm"><FileSearch size={14}/>Evidence</Button></SheetTrigger><SheetContent className="mobile-evidence"><SheetHeader><SheetTitle>Live evidence</SheetTitle><SheetDescription>Actual session tools and exact reply sources.</SheetDescription></SheetHeader><EvidencePanel events={events}/></SheetContent></Sheet></div>
-    {voiceEnabled&&<><AgentControlBar controls={{microphone:true,camera:false,screenShare:false,chat:false,leave:false}}/><StartAudioButton label="Enable audio playback"/><p className="secondary">Captions are not word-aligned to Gnani audio.</p></>}
+    {voiceEnabled&&<><AgentControlBar controls={{microphone:true,camera:false,screenShare:false,chat:false,leave:false}} onDeviceError={()=>{void voiceOff().catch(()=>{});setError('Microphone unavailable. Continue using text.');}}/><StartAudioButton label="Enable audio playback"/><p className="secondary">Captions are not word-aligned to Gnani audio.</p></>}
    </section><aside className="desktop-evidence"><EvidencePanel events={events}/></aside>
   </div><footer className="simulation-footer">Fake data only. No payment processing, real email or real human handoff. No audio recordings are retained.</footer>
  </main>;

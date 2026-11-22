@@ -1,0 +1,11 @@
+{
+  "status": "not_measured",
+  "reason": "Provider calls disabled: zero approved budgets, no Meta/Gnani/LiveKit credentials and no real microphone interaction.",
+  "measurements": [],
+  "median_seconds": null,
+  "range_seconds": null,
+  "cold_warm": null,
+  "region_device_browser": null,
+  "boundary": "When authorized, report LiveKit ChatMessage.metrics e2e_latency in seconds, not LLM TTFT alone. Server/SDK timing does not certify sound at a physical speaker.",
+  "framework_interruption_test": "Deterministic room-free cancellation only; not an acoustic barge-in measurement."
+}

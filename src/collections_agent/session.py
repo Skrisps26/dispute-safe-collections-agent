@@ -31,7 +31,7 @@ def create_session(settings: Settings | None = None, state: SessionState | None 
         if event.item.role == "assistant" and pending and event.item.text_content == pending["text"]:
             state.event("reply_sources", {"message_id":event.item.id, **pending})
             agent._pending_sources = None
-        if event.item.role == "assistant" and event.item.metrics:
-            state.event("latency", {"message_id":event.item.id,"unit":"seconds", "metrics":event.item.metrics})
+        if event.item.metrics:
+            state.event("latency", {"message_id":event.item.id,"role":event.item.role,"unit":"seconds", "metrics":event.item.metrics})
     attach_tool_events(session, agent)
     return session, agent, provider

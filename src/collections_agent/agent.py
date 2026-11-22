@@ -48,9 +48,15 @@ class CollectionsAgent(Agent):
                 if message is None:
                     raise LimitError("Please enter an invoice question.")
                 if message.id != self.state.last_message_id:
+                    if self.state.voice_lease and self.state.voice_replies >= 10:
+                        if self.voice:
+                            self.voice.schedule_off("Voice reply allowance exhausted; continuing in text.")
+                        raise LimitError("Voice reply allowance exhausted. Continue in text.")
                     text = message.text_content or ""
                     scope = "public-voice" if self.state.voice_lease else self.provider.scope
                     await self.provider.guards.turn(self.state, text, scope)
+                    if self.state.voice_lease:
+                        self.state.voice_replies += 1
                     self.provider.scope = scope
                     self.state.last_message_id = message.id
                     self.state.last_customer_turn = text
