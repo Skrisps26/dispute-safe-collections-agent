@@ -231,6 +231,7 @@ dependencies = [
     { name = "openai" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "pyjwt" },
     { name = "upstash-ratelimit" },
     { name = "upstash-redis" },
 ]
@@ -252,6 +253,7 @@ requires-dist = [
     { name = "openai" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "pyjwt" },
     { name = "upstash-ratelimit" },
     { name = "upstash-redis" },
 ]

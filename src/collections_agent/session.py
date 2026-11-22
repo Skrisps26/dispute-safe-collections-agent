@@ -6,6 +6,7 @@ from .limits import Guards
 from .models import SessionState
 from .provider import Provider
 from .settings import Settings
+from .telemetry import attach_tool_events
 
 
 def create_session(settings: Settings | None = None, state: SessionState | None = None, *, scope="public-text", transport=None, guards=None):
@@ -32,4 +33,5 @@ def create_session(settings: Settings | None = None, state: SessionState | None 
             agent._pending_sources = None
         if event.item.role == "assistant" and event.item.metrics:
             state.event("latency", {"message_id":event.item.id,"unit":"seconds", "metrics":event.item.metrics})
+    attach_tool_events(session, agent)
     return session, agent, provider

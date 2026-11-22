@@ -11,15 +11,19 @@ class DomainTools:
     """Synchronous effects cannot be interrupted halfway through a dispute/escalation."""
     def __init__(self, state: SessionState):
         self.state = state
+        self.framework_events = False
 
     def execute(self, name: str, inputs: dict, actor: str = "model", call_id: str | None = None) -> ToolResult:
         call_id = call_id or new_id()
-        self.state.event("tool_call", {"call_id": call_id, "name": name, "inputs": inputs, "actor": actor})
+        domain_event = actor == "policy" or not self.framework_events
+        if domain_event:
+            self.state.event("tool_call", {"call_id": call_id, "name": name, "inputs": inputs, "actor": actor})
         result = getattr(self, "_" + name)(call_id, **inputs)
         self.state.results[call_id] = result
         for fact in result.facts:
             self.state.facts[fact.fact_id] = fact
-        self.state.event("tool_result", {"call_id": call_id, "result": result.model_dump(mode="json")})
+        if domain_event:
+            self.state.event("tool_result", {"call_id": call_id, "result": result.model_dump(mode="json")})
         if name == "log_dispute" and result.ok:
             self.execute("escalate_to_human", {}, actor="policy")
         if name in {"log_dispute", "escalate_to_human"} and result.ok:
